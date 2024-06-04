@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Sayfa - Dijital Pazarlama Tahmini</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Dijital Pazarlama Tahmini</h1>
+            <nav>
+                <ul class="menu">
+                    <li><a href="#" onclick="showHomePage()">Ana Sayfa</a></li>
+                    <li><a href="#" onclick="showPredictionPage()">Tahmin Modeli</a></li>
+                    <li><a href="#" onclick="showTablesPage()">Tablolar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="page">
+        <div class="hero">
+            <div class="container">
+                <h2 style="color: rgb(213, 148, 27);">Yapay Zeka ile Dijital Pazarlama Tahmini</h2>
+                <p style="color: rgb(213, 148, 27);">Simurg Dijital</p>
+            </div>
+        </div>
+        <div class="container content">
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-chart-line fa-3x"></i>
+                    <h3>Reklam Harcaması Analizi</h3>
+                    <p>Reklam harcamalarınızın gelecekteki gelir üzerindeki etkisini tahmin edin.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-calendar-day fa-3x"></i>
+                    <h3>Günlük Analizler</h3>
+                    <p>Günlük bazda detaylı analizler sağlayın.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-brain fa-3x"></i>
+                    <h3>Veriye Dayalı Kararlar</h3>
+                    <p>Kampanyalarınızın performansını optimize etmek için veriye dayalı kararlar alın.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="prediction" class="page hidden">
+        <div class="container">
+            <h2>Tahmin Modeli</h2>
+            <form id="prediction-form" class="form-modern">
+                <label for="day">Gün:</label>
+                <select id="day" name="day" required>
+                    <option value="Pazartesi">Pazartesi</option>
+                    <option value="Salı">Salı</option>
+                    <option value="Çarşamba">Çarşamba</option>
+                    <option value="Perşembe">Perşembe</option>
+                    <option value="Cuma">Cuma</option>
+                    <option value="Cumartesi">Cumartesi</option>
+                    <option value="Pazar">Pazar</option>
+                </select><br><br>
+                <label for="cost">Reklam Harcaması:</label>
+                <input type="number" id="cost" name="cost" required><br><br>
+                <input type="submit" value="Tahmin Yap" class="btn-modern">
+            </form>
+            <div id="prediction-result" class="hidden">
+                <p id="predicted-revenue"></p>
+            </div>
+            <div id="performance-metrics" style="width: 400px; height: 300px;"></div>
+            <div class="chart-container">
+                <canvas id="comparison-chart"></canvas>
+                <div id="error-metrics"></div>
+                <div id="correlation-analysis"></div>
+            </div>
+
+
+        </div>
+    </section>
+
+
+    <section id="tables" class="page hidden">
+        <div class="container">
+            <h2>Tablolar</h2>
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Tarih</th>
+                        <th>Gün</th>
+                        <th>Para Birimi</th>
+                        <th>Reklam Harcaması</th>
+                        <th>Reklamdan Kazanç</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row['Tarih'] }}</td>
+                        <td>{{ row['Gün'] }}</td>
+                        <td>{{ row['Para Birimi'] }}</td>
+                        <td>{{ row['Reklam Harcaması'] }}</td>
+                        <td>{{ row['Reklamdan Kazanç'] | int }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button id="prevPage" onclick="prevPage()">Önceki</button>
+                <button id="nextPage" onclick="nextPage()">Sonraki</button>
+            </div>
+
+            <div class="charts">
+                <div class="chart-container">
+                    <canvas id="scatter-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="cost-histogram"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="revenue-histogram"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
